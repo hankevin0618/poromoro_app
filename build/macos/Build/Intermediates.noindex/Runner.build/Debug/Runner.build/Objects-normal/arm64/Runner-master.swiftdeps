@@ -1,0 +1,8 @@
+version: "Apple Swift version 5.7 (swiftlang-5.7.0.127.4 clang-1400.0.29.50)"
+options: "e6f998284356d636ddce241be1347ab5e4c8d18eda693e9a97c511544d5f770a"
+build_start_time: [1675133407, 333966016]
+build_end_time: [1675133412, 429280996]
+inputs:
+  "/Users/kehan/Desktop/jina/toonflix/macos/Flutter/GeneratedPluginRegistrant.swift": [1675133389, 64449310]
+  "/Users/kehan/Desktop/jina/toonflix/macos/Runner/AppDelegate.swift": [1675133341, 356554508]
+  "/Users/kehan/Desktop/jina/toonflix/macos/Runner/MainFlutterWindow.swift": [1675133341, 359376907]
