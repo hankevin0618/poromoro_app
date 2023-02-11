@@ -1,19 +1,58 @@
+import 'dart:convert';
 
+import 'package:flutter_app/models/webtoon_detail_model.dart';
+import 'package:flutter_app/models/webtoon_model.dart';
+import 'package:flutter_app/models/webtton_episode_model.dart';
 import 'package:http/http.dart';
 
 class ApiService {
-  final String baseUrl = "https://webtoon-crawler.nomadcoders.workers.dev";
-  final String today = "today";
+  static const String baseUrl =
+      "https://webtoon-crawler.nomadcoders.workers.dev";
+  static const String today = "today";
 
-  void getTodaysToons() async {
+  static Future<List<WebtoonModel>> getTodaysToons() async {
     // install http in pub.dev
+    List<WebtoonModel> webtoonInstances = [];
+
     final url = Uri.parse('$baseUrl/$today');
     final response = await get(url);
-    // if(response.statusCode == 200) {
-    //   print(response.body);
-    //   return;
-    // }
-    // throw Error();
+    if (response.statusCode == 200) {
+      final List<dynamic> webtoons = jsonDecode(response.body);
+      for (var webtoon in webtoons) {
+        var toon = WebtoonModel.fromJson(webtoon);
+        webtoonInstances.add(toon);
+      }
+
+      return webtoonInstances;
+    }
+    throw Error();
   }
 
+  static Future<WebtoonDetailModel> getToonById(String id) async {
+    final url = Uri.parse("$baseUrl/$id");
+    final response = await get(url);
+
+    if (response.statusCode == 200) {
+      final webtoon = jsonDecode(response.body);
+      return WebtoonDetailModel.fromJson(webtoon);
+    }
+    throw Error();
+  }
+
+  static Future<List<WebtoonEpisodeModel>> getLatestEpisodesById(
+      String id) async {
+    List<WebtoonEpisodeModel> episodesInstances = [];
+
+    final url = Uri.parse("$baseUrl/$id/episodes");
+    final response = await get(url);
+
+    if (response.statusCode == 200) {
+      final episodes = jsonDecode(response.body);
+      for (var episode in episodes) {
+        episodesInstances.add(WebtoonEpisodeModel.fromJson(episode));
+      }
+      return episodesInstances;
+    }
+    throw Error();
+  }
 }
